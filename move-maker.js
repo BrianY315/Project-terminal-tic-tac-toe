@@ -15,9 +15,18 @@
             ['O', 'O', 'X']
         ];
 */
-function validateMove(move, board) {
-    // Implement this at the end if you have time, otherwise you can help your teammates!
-    return true;
+export function validateMove(move, board) {
+  // Implement this at the end if you have time, otherwise you can help your teammates!
+  const format = /^[1-3],[1-3]$/;
+  if (!format.test(move)) {
+    return false;
+  }
+  const position = move.split(",");
+  const row = Number(position[0]);
+  const column = Number(position[1]);
+  const rowIndex = row - 1;
+  const columnIndex = column - 1;
+  return board[rowIndex][columnIndex] === "_";
 }
 
 /*
@@ -32,5 +41,14 @@ function validateMove(move, board) {
             - Return true
 */
 export function makeMove(board, move, player) {
-    return false;
+  if (validateMove(move, board)) {
+    const position = move.split(",");
+    const row = Number(position[0]);
+    const column = Number(position[1]);
+    const rowIndex = row - 1;
+    const columnIndex = column - 1;
+    board[rowIndex][columnIndex] = player;
+    return true;
+  }
+  return false;
 }
