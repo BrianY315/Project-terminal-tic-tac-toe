@@ -1,4 +1,4 @@
-import { jest } from "@jest/globals";
+import { expect, jest, test } from "@jest/globals";
 import { isGameOver } from "../status-checker";
 
 const empty = () => [
@@ -7,15 +7,16 @@ const empty = () => [
   ["_", "_", "_"],
 ];
 
-describe("isGameOver", () => {
-  let logSpy;
-  beforeEach(() => {
-    logSpy = jest.spyOn(console, "log").mockImplementation(() => {});
-  });
-  afterEach(() => {
-    logSpy.mockRestore();
-  });
+// moved from isGameOver function
+let logSpy;
+beforeEach(() => {
+  logSpy = jest.spyOn(console, "log").mockImplementation(() => {});
+});
+afterEach(() => {
+  logSpy.mockRestore();
+});
 
+describe("isGameOver", () => {
   test("Returns false for an empty board", () => {
     expect(isGameOver(empty())).toBe(false);
     expect(logSpy).not.toHaveBeenCalled();
@@ -41,7 +42,7 @@ describe("rows", () => {
 
   test("O wins with a row", () => {
     const board = empty();
-    board[i] = ["O", "O", "O"];
+    board[1] = ["O", "O", "O"];
     expect(isGameOver(board)).toBe(true);
     expect(logSpy).toHaveBeenCalledWith("O has won the game!\n");
   });
@@ -49,6 +50,54 @@ describe("rows", () => {
   test("Two in a row is not a win", () => {
     const board = empty();
     board[0] = ["X", "X", "_"];
+    expect(isGameOver(board)).toBe(false);
+  });
+});
+
+describe("columns", () => {
+  test.each([0, 1, 2])("O wins with column %i", (c) => {
+    const board = empty();
+    for (let r = 0; r < 3; r++) board[r][c] = "O";
+    expect(isGameOver(board)).toBe(true);
+    expect(logSpy).toHaveBeenCalledWith("O has won the game!\n");
+  });
+
+  test("X wins with a column", () => {
+    const board = empty();
+    for (let r = 0; r < 3; r++) board[r][2] = "X";
+    expect(isGameOver(board)).toBe(true);
+    expect(logSpy).toHaveBeenCalledWith("X has won the game!\n");
+  });
+
+  test("A mixed column is not a win", () => {
+    const board = empty();
+    board[0][0] = "X";
+    board[1][0] = "O";
+    board[2][0] = "X";
+    expect(isGameOver(board)).toBe(false);
+  });
+});
+
+describe("diagonals", () => {
+  test("X wins top-left to bottom-right", () => {
+    const board = empty();
+    board[0][0] = board[1][1] = board[2][2] = "X";
+    expect(isGameOver(board)).toBe(true);
+    expect(logSpy).toHaveBeenCalledWith("X has won the game!\n");
+  });
+
+  test("O wins top-right to bottom-left", () => {
+    const board = empty();
+    board[0][2] = board[1][1] = board[2][0] = "O";
+    expect(isGameOver(board)).toBe(true);
+    expect(logSpy).toHaveBeenCalledWith("O has won the game!\n");
+  });
+
+  test("A broken diagonal is not a win", () => {
+    const board = empty();
+    board[0][0] = "X";
+    board[1][1] = "O";
+    board[2][2] = "X";
     expect(isGameOver(board)).toBe(false);
   });
 });
