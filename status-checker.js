@@ -29,7 +29,9 @@ function checkRow(board, player, rowNumber) {
     Return true if the player has made a move in all 3 squares in the column
     Otherwise, return false
 */
-function checkColumn(board, player, columnNumber) {}
+function checkColumn(board, player, columnNumber) {
+  return board.every((row) => row[columnNumber] === player);
+}
 
 /*
     Given 2 parameters:
@@ -39,12 +41,12 @@ function checkColumn(board, player, columnNumber) {}
     Otherwise, return false
 */
 function checkDiagonal(board, player) {
-const topLeftToBottomRight =
-  board[0][0] === player && board[1][1] === player && board[2][2] === player;
-const topRightToBottomLeft =
-  board[0][2] === player && board[1][1] === player && board[2][0] === player;
+  const topLeftToBottomRight =
+    board[0][0] === player && board[1][1] === player && board[2][2] === player;
+  const topRightToBottomLeft =
+    board[0][2] === player && board[1][1] === player && board[2][0] === player;
 
-return topLeftToBottomRight || topRightToBottomLeft;
+  return topLeftToBottomRight || topRightToBottomLeft;
 }
 
 /*
