@@ -30,3 +30,25 @@ describe("isGameOver", () => {
     expect(isGameOver(board)).toBe(false);
   });
 });
+
+describe("rows", () => {
+  test.each([0, 1, 2])("X wins with row %i", (r) => {
+    const board = empty();
+    board[r] = ["X", "X", "X"];
+    expect(isGameOver(board)).toBe(true);
+    expect(logSpy).toHaveBeenCalledWith("X has won the game!\n");
+  });
+
+  test("O wins with a row", () => {
+    const board = empty();
+    board[i] = ["O", "O", "O"];
+    expect(isGameOver(board)).toBe(true);
+    expect(logSpy).toHaveBeenCalledWith("O has won the game!\n");
+  });
+
+  test("Two in a row is not a win", () => {
+    const board = empty();
+    board[0] = ["X", "X", "_"];
+    expect(isGameOver(board)).toBe(false);
+  });
+});
