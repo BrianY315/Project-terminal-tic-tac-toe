@@ -20,4 +20,13 @@ describe("isGameOver", () => {
     expect(isGameOver(empty())).toBe(false);
     expect(logSpy).not.toHaveBeenCalled();
   });
+
+  test("Returns false for a game in progress", () => {
+    const board = [
+      ["X", "O", "_"],
+      ["_", "X", "_"],
+      ["O", "_", "_"],
+    ];
+    expect(isGameOver(board)).toBe(false);
+  });
 });
