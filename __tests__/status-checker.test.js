@@ -100,4 +100,25 @@ describe("diagonals", () => {
     board[2][2] = "X";
     expect(isGameOver(board)).toBe(false);
   });
+
+  test("A full board with no winner is a tie", () => {
+    const board = [
+      ["X", "O", "X"],
+      ["X", "O", "O"],
+      ["O", "X", "X"],
+    ];
+    expect(isGameOver(board)).toBe(true);
+    expect(logSpy).toHaveBeenCalledTimes(1);
+    expect(logSpy.mock.calls[0][0]).toMatch(/Game Over/);
+  });
+
+  test("A win on the last square is reported as a win, not a tie", () => {
+    const board = [
+      ["X", "O", "X"],
+      ["O", "X", "O"],
+      ["O", "X", "X"],
+    ];
+    expect(isGameOver(board)).toBe(true);
+    expect(logSpy).toHaveBeenCalledWith("X has won the game!\n");
+  });
 });
