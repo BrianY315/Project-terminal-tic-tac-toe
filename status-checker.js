@@ -39,7 +39,12 @@ function checkColumn(board, player, columnNumber) {}
     Otherwise, return false
 */
 function checkDiagonal(board, player) {
-  // It may be easier to use an if statement than a loop here
+const topLeftToBottomRight =
+  board[0][0] === player && board[1][1] === player && board[2][2] === player;
+const topRightToBottomLeft =
+  board[0][2] === player && board[1][1] === player && board[2][0] === player;
+
+return topLeftToBottomRight || topRightToBottomLeft;
 }
 
 /*
