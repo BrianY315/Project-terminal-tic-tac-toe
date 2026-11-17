@@ -27,7 +27,12 @@ export function validateMove(move, board) {
   const column = Number(position[1]);
   const rowIndex = row - 1;
   const columnIndex = column - 1;
-  return board[rowIndex][columnIndex] === "_";
+
+  if (board[rowIndex][columnIndex] !== "_") {
+    console.log("try again...");
+  } else {
+    return board[rowIndex][columnIndex] === "_";
+  }
 }
 
 /*
