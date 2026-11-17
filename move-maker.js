@@ -19,7 +19,7 @@ export function validateMove(move, board) {
   // Implement this at the end if you have time, otherwise you can help your teammates!
   const format = /^[1-3],[1-3]$/;
   if (!format.test(move)) {
-    console.log("Try again...");
+    console.log("Values should be between 1 and 3. Try again...");
     return false;
   }
   const position = move.split(",");
@@ -29,7 +29,7 @@ export function validateMove(move, board) {
   const columnIndex = column - 1;
 
   if (board[rowIndex][columnIndex] !== "_") {
-    console.log("try again...");
+    console.log("Try again...");
   } else {
     return board[rowIndex][columnIndex] === "_";
   }
