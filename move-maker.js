@@ -19,6 +19,7 @@ export function validateMove(move, board) {
   // Implement this at the end if you have time, otherwise you can help your teammates!
   const format = /^[1-3],[1-3]$/;
   if (!format.test(move)) {
+    console.log("Try again...");
     return false;
   }
   const position = move.split(",");
